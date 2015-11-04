@@ -11,6 +11,7 @@ public class DrawHelper {
 
     private static Paint BACK_NORMAL = null;
     private static Paint BACK_MENU = null;
+    private static Paint BACK_MENU_HIGH = null;
 
     private static Paint BACK_CIRCLE_TODAY = null;
 
@@ -30,8 +31,19 @@ public class DrawHelper {
             BACK_MENU = new Paint();
             BACK_MENU.setStyle(Paint.Style.FILL_AND_STROKE);
             BACK_MENU.setColor(Values.BACK_MENU);
-            BACK_MENU.setShadowLayer(30,0,0, Values.BACK_MENU_SHADOW);
+            BACK_MENU.setShadowLayer(30, 0, 0, Values.BACK_MENU_SHADOW);
         }
         return BACK_MENU;
+    }
+
+    public static Paint getHighMenu()
+    {
+        if(BACK_MENU_HIGH ==null){
+            BACK_MENU_HIGH = new Paint();
+            BACK_MENU_HIGH.setStyle(Paint.Style.FILL);
+            BACK_MENU_HIGH.setColor(Values.BACK_MENU_HIGH);
+
+        }
+        return BACK_MENU_HIGH;
     }
 }
