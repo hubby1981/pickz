@@ -37,7 +37,7 @@ public class MenuView extends ComposeView {
         BitmapHelper.drawIn(canvas, last,menuRect, h / 10);
 
         highRect = homeRect;
-        Rect high = new Rect(highRect.left-h/2,menu.bottom-h/16,highRect.right+h/2,menu.bottom);
+        Rect high = new Rect(highRect.left-h/2,menu.bottom-h/10,highRect.right+h/2,menu.bottom);
 
         canvas.drawRect(high, DrawHelper.getHighMenu());
 
@@ -48,7 +48,7 @@ public class MenuView extends ComposeView {
         font.setFakeBoldText(true);
         canvas.drawText("Dashboard", homeRect.left + h / 10, h / 4, font);
         canvas.drawText("Charts", chartsRect.left+h/10, h/4, font);
-        canvas.drawText("Settings", settingsRect.left+h/10, h/4, font);
+        canvas.drawText("Settings", settingsRect.left+h/14, h/4, font);
         canvas.drawText("Menu", menuRect.left+h/6, h/4, font);
 
     }
