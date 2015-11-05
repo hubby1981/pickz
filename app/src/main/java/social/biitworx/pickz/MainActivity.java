@@ -40,7 +40,7 @@ public static Context context;
                     }
                 });
             }
-        },0,250);
+        },0,75);
     }
 
 

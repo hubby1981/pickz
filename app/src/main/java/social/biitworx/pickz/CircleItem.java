@@ -17,7 +17,7 @@ public class CircleItem {
     public String unit="";
     private int maxTime=5;
     private int maxCount=24;
-
+private int mover=10;
     public CircleItem(Bitmap icon){
         this(icon,0);
     }
@@ -27,13 +27,13 @@ public class CircleItem {
 
 
     public void move(){
-        degree +=30;
-        if(degree == 360)degree=0;
+        degree +=mover;
+        if(degree >= 360)degree=0;
     }
 
     public void moveL(){
-        if(degree == 0)degree=360;
-        degree -=30;
+        if(degree <= 0)degree=360;
+        degree -=mover;
     }
 
     public int countTime(){
