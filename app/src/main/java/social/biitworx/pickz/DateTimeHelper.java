@@ -17,7 +17,7 @@ public class DateTimeHelper {
        Date d = new Date();
         int minutes = 0;
 
-        minutes = (d.getHours()*60)-d.getMinutes();
+        minutes = (d.getHours()*60)+d.getMinutes();
 
         return minutes;
 
