@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -50,6 +51,11 @@ public class MenuView extends ComposeView {
         canvas.drawText("Charts", chartsRect.left+h/10, h/4, font);
         canvas.drawText("Settings", settingsRect.left+h/14, h/4, font);
         canvas.drawText("Menu", menuRect.left+h/6, h/4, font);
+
+    }
+
+    @Override
+    public void checkTouchDown(Point p) {
 
     }
 }

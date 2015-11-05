@@ -5,12 +5,47 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by marcel.weissgerber on 04.11.2015.
  */
 public class CircleView extends ComposeView {
+    Rect plus = null;
+    Rect minus = null;
+
+    private CircleCollection collection = new CircleCollection();
+
+    public CircleView() {
+        CircleCollection collection = new CircleCollection();
+
+        int color1 = Color.argb(255, 200, 20, 160);
+        int color2 = Color.argb(255, 70, 20, 200);
+        int color3 = Color.argb(255, 120, 60, 20);
+        int color4 = Color.argb(255, 200, 60, 20);
+
+        Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_coffee);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_work);
+        Bitmap bitmap3 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_train);
+        Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_bed);
+
+        collection.add(new CircleItem(bitmap1).color(color1).text("coffee").count(0).max(5).limit(10));
+        collection.add(new CircleItem(bitmap2).color(color2).text("work").units("hrs").count(4).limit(10));
+        collection.add(new CircleItem(bitmap3).color(color3).text("fitness").count(2).units("hrs").limit(3));
+        collection.add(new CircleItem(bitmap4).color(color4).text("bed").count(12).units("hrs").limit(14));
+
+        this.collection = collection;
+    }
+
+    public CircleView(CircleCollection collection) {
+        this.collection = collection;
+    }
+
     @Override
     public void onDrawChild(Canvas canvas) {
 
@@ -26,76 +61,128 @@ public class CircleView extends ComposeView {
         circleFill.setStyle(Paint.Style.FILL);
         circleFill.setColor(Color.argb(255, 100, 200, 100));
 
+
+        Paint circleFill6 = new Paint();
+        circleFill6.setStyle(Paint.Style.FILL);
+        circleFill6.setColor(Color.argb(175, 250, 100, 100));
+
+
         Paint circleFill3 = new Paint();
         circleFill3.setStyle(Paint.Style.FILL);
-        circleFill3.setColor(Color.argb(255, 150, 230, 150));
+        circleFill3.setColor(Color.argb(255, 150, 220, 150));
+
+        Paint circleFill4 = new Paint();
+        circleFill4.setStyle(Paint.Style.STROKE);
+        circleFill4.setColor(Color.argb(255, 200, 230, 200));
 
         Paint circleFill2 = new Paint();
         circleFill2.setStyle(Paint.Style.STROKE);
-        circleFill2.setColor(Color.argb(255, 100, 250, 100));
+        circleFill2.setColor(Color.argb(255, 120, 200, 120));
 
         float diff = (float) (display.width() / 2.5) - (float) (display.width() / 2.7);
         circleFill2.setStrokeWidth(diff);
+        circleFill4.setStrokeWidth(diff);
+
 
         float left = display.exactCenterX() - (float) (display.width() / 2.6);
         float top = display.exactCenterY() - (float) (display.width() / 2.6);
         float right = display.exactCenterX() + (float) (display.width() / 2.6);
         float bottom = display.exactCenterY() + (float) (display.width() / 2.6);
+        int minutes = DateTimeHelper.getMinutesOfDay();
+        int minutes2 = DateTimeHelper.getMinutesOfDay();
+        CircleItem c = null;
+        if (collection != null) {
+
+            c = collection.getExposed();
+            if (c != null) {
+                if (c.countTime() > 0) {
+                    minutes = c.countTime();
+                    circleFill2.setColor(c.backcolor);
+                }
+            }
+
+        }
+        canvas.drawArc(left, top, right, bottom, 0, 360, true, circleFill4);
 
 
-        canvas.drawArc(left, top, right, bottom, 0, DateTimeHelper.getDayAngle(DateTimeHelper.getMinutesOfDay()), true, circleFill2);
+        if (collection != null && collection.rotater == null) {
 
+            canvas.drawArc(left, top, right, bottom, 0, DateTimeHelper.getDayAngle(minutes), true, circleFill2);
+
+        }
         canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.7), circleFill3);
         canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), display.width() / 4, circleFill);
 
+        if(c!=null){
+            canvas.drawArc(display.exactCenterX()-display.width()/4 , display.exactCenterY()-display.width()/4 ,display.exactCenterX()+display.width()/4, display.exactCenterY()+display.width()/4, 0,180, true, circleFill6);
+
+        }
 
         canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.7), circleLine);
 
         canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.5), circleLine);
         canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), display.width() / 4, circleLine);
 
-        float rc1 = (float)(diff * 2.3);
-        int color1 = Color.argb(255, 200, 20, 160);
-        int color2 = Color.argb(255, 70, 20, 200);
-        int color3 = Color.argb(255, 120, 60, 20);
-        int color4 = Color.argb(255, 200, 60, 20);
-
-        Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_coffee);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_work);
-        Bitmap bitmap3 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_train);
-        Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_bed);
-
-        drawWithDegree(canvas, 0, rc1,color1,bitmap1);
-        drawWithDegree(canvas, 30, rc1,color2,bitmap3);
-        drawWithDegree(canvas, 60, rc1,color3,bitmap2);
-        drawWithDegree(canvas, 90, rc1,color4,bitmap4);
+        float rc1 = (float) (diff * 2.3);
 
 
-    }
+        if (collection != null) {
+            collection.onDraw(canvas, display, rc1);
 
-    private void drawWithDegree(Canvas canvas, int degree, float size,int color,Bitmap icon) {
-        float xc1 = (float) Math.sin(Math.toRadians(degree)) * (float) (display.width() / 3.5);
-        float yc1 = (float) Math.cos(Math.toRadians(degree)) * (float) (display.width() / 3.5);
-        float x = display.exactCenterX() + xc1;
-        float y = display.exactCenterY() - yc1;
-        float w = (float)(size/1.1);
-        Rect rc = new Rect((int)(x-w/2),(int)(y-w/2),(int)(x+w/2),(int)(y+w/2));
+            c = collection.getExposed();
+            if (c != null) {
+                drawInfo(canvas, c.name, display, 0, 30);
+                drawInfo(canvas, c.getCounter(), display, 1.2f, 40);
 
-        drawSmallCircle(canvas, x, y, size,color);
+            } else {
+                drawInfo(canvas, new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date()), display, 0, 30);
+                drawInfo(canvas, new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH).format(new Date()), display, 1.2f, 40);
 
-        BitmapHelper.drawIn(canvas,icon,rc,0);
-    }
-
-    private void drawSmallCircle(Canvas canvas, float x, float y, float radius,int color) {
-        Paint circleLine = new Paint();
-        circleLine.setStyle(Paint.Style.FILL);
-        circleLine.setColor(color);
-        circleLine.setShadowLayer(10, 0, 0, Color.BLACK);
-        circleLine.setStrokeWidth(2);
-        circleLine.setAntiAlias(true);
-        canvas.drawCircle(x, y, radius, circleLine);
+            }
+        }
 
 
     }
+
+    private void drawInfo(Canvas canvas, String text, Rect display, float y, int size) {
+        float fx = display.exactCenterX();
+        float fy = display.exactCenterY();
+        Paint font = new Paint();
+        font.setFakeBoldText(true);
+        font.setColor(Color.WHITE);
+        font.setTextSize(display.height() / size);
+        Rect rc = new Rect((int) (fx - display.width() / 4), (int) (fy - display.height() / 4), (int) (fx + display.width() / 4), (int) (fy + display.height() / 4));
+
+        float mm = font.measureText(text);
+        fy += y * font.getTextSize();
+        plus = new Rect(rc.left, rc.top, rc.right, rc.top + rc.height() / 2);
+        minus = new Rect(rc.left, rc.bottom - rc.height() / 2, rc.right, rc.bottom);
+
+        canvas.drawText(text, fx - mm / 2, fy, font);
+    }
+
+    @Override
+    public void checkTouchDown(Point p) {
+
+        if (collection != null) {
+            CircleItem c = collection.canRotate(p);
+
+
+            if (c != null) {
+                collection.rotate(c);
+            } else {
+                CircleItem c1 = collection.getExposed();
+                if (c1 != null && plus != null && plus.contains(p.x, p.y)) {
+                    c1.plus();
+                } else if (c1 != null && minus != null && minus.contains(p.x, p.y)) {
+                    c1.minus();
+                } else {
+
+                    collection.allUnExpose();
+                }
+            }
+        }
+    }
+
 
 }

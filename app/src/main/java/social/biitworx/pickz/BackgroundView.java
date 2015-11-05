@@ -1,6 +1,7 @@
 package social.biitworx.pickz;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 /**
@@ -14,6 +15,11 @@ public class BackgroundView extends ComposeView {
 
             canvas.drawRect(display,DrawHelper.getNormalBack());
 
+
+    }
+
+    @Override
+    public void checkTouchDown(Point p) {
 
     }
 }

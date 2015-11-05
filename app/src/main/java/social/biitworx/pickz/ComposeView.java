@@ -1,6 +1,7 @@
 package social.biitworx.pickz;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 /**
@@ -17,4 +18,6 @@ public abstract class ComposeView {
         }
     }
     public abstract void onDrawChild(Canvas canvas);
+
+    public abstract void checkTouchDown(Point p);
 }
