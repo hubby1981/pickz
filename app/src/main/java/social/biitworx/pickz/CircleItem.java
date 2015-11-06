@@ -6,51 +6,23 @@ import android.graphics.Color;
 /**
  * Created by marcel.weissgerber on 05.11.2015.
  */
-public class CircleItem {
+public class CircleItem extends BaseCircleItem {
 
-    public int backcolor =android.graphics.Color.argb(255,100,100,100);
-    public int degree = 0;
+
+
     private int counter=0;
-    public Bitmap icon=null;
-    public boolean expose=false;
+
     public String name="";
     public String unit="";
     private int maxTime=5;
     private int maxCount=24;
-private int mover=10;
-    public CircleItem(Bitmap icon){
-        this(icon,0);
-    }
-    public CircleItem(Bitmap icon,int counter){
-        this.icon =icon;
-    }
 
-
-    public void move(){
-        degree +=mover;
-        if(degree >= 360)degree=0;
-    }
-
-    public void moveL(){
-        if(degree <= 0)degree=360;
-        degree -=mover;
+    public CircleItem(Bitmap icon) {
+        super(icon);
     }
 
     public int countTime(){
-        return unit.equals("hrs")?counter*60:maxTime>0?maxTime*counter:0;
-    }
-
-    public boolean mustMoveL(){
-        return degree<180 && degree>0;
-    }
-
-    public boolean isMoved(){
-        return degree==0;
-    }
-
-    public CircleItem color (int color){
-        this.backcolor=color;
-        return this;
+        return unit.equals("hours")?counter*60:maxTime>0?maxTime*counter:0;
     }
 
     public CircleItem text(String text){
@@ -76,6 +48,10 @@ private int mover=10;
     public CircleItem limit(int max){
         this.maxCount = max;
         return this;
+    }
+
+    public int getCount(){
+        return counter;
     }
 
     public String getCounter(){

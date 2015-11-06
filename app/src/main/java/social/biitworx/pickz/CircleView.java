@@ -34,10 +34,10 @@ public class CircleView extends ComposeView {
         Bitmap bitmap3 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_train);
         Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_bed);
 
-        collection.add(new CircleItem(bitmap1).color(color1).text("coffee").count(0).max(5).limit(10));
-        collection.add(new CircleItem(bitmap2).color(color2).text("work").units("hrs").count(4).limit(10));
-        collection.add(new CircleItem(bitmap3).color(color3).text("fitness").count(2).units("hrs").limit(3));
-        collection.add(new CircleItem(bitmap4).color(color4).text("bed").count(12).units("hrs").limit(14));
+        collection.add(new CircleItem(bitmap1).text("coffee").count(0).max(5).limit(10).color(color1) );
+        collection.add(new CircleItem(bitmap2).text("work").units("hours").count(4).limit(10).color(color2) );
+        collection.add(new CircleItem(bitmap3).text("fitness").count(2).units("hours").limit(3).color(color3) );
+        collection.add(new CircleItem(bitmap4).text("bed").count(12).units("hours").limit(14).color(color4) );
 
         this.collection = collection;
     }
@@ -46,6 +46,9 @@ public class CircleView extends ComposeView {
         this.collection = collection;
     }
 
+    public <T> T get(BaseCircleItem item){
+        return item!=null?(T)item.get():null;
+    }
     @Override
     public void onDrawChild(Canvas canvas) {
 
@@ -93,7 +96,7 @@ public class CircleView extends ComposeView {
         CircleItem c = null;
         if (collection != null) {
 
-            c = collection.getExposed();
+            c = get(collection.getExposed());
             if (c != null) {
                 if (c.countTime() > 0) {
                     minutes = c.countTime();
@@ -129,7 +132,7 @@ public class CircleView extends ComposeView {
         if (collection != null) {
             collection.onDraw(canvas, display, rc1);
 
-            c = collection.getExposed();
+            c = get( collection.getExposed());
             if (c != null) {
                 drawInfo(canvas, c.name, display, 0, 30);
                 drawInfo(canvas, c.getCounter(), display, 1.2f, 40);
@@ -165,13 +168,13 @@ public class CircleView extends ComposeView {
     public void checkTouchDown(Point p) {
 
         if (collection != null) {
-            CircleItem c = collection.canRotate(p);
+            CircleItem c = get(collection.canRotate(p));
 
 
             if (c != null) {
                 collection.rotate(c);
             } else {
-                CircleItem c1 = collection.getExposed();
+                CircleItem c1 = get(collection.getExposed());
                 if (c1 != null && plus != null && plus.contains(p.x, p.y)) {
                     c1.plus();
                 } else if (c1 != null && minus != null && minus.contains(p.x, p.y)) {
