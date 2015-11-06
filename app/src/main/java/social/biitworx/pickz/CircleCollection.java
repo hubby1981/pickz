@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by marcel.weissgerber on 05.11.2015.
  */
 public class CircleCollection {
-    private int max = 12;
+    private int max = 9;
     private List<BaseCircleItem> items = new LinkedList<>();
     private HashMap<BaseCircleItem, Rect> touch = new HashMap<>();
     private Rect display = null;
@@ -26,7 +26,7 @@ public class CircleCollection {
 
     public CircleCollection add(BaseCircleItem item) {
         if (items.size() < max) {
-            item.degree = items.size() * 30;
+            item.degree = items.size() * 40 ;
             items.add(item);
         }
         return this;
@@ -53,7 +53,7 @@ public class CircleCollection {
             if (c.expose) yy = size;
             Rect rc = drawWithDegree(canvas, c.degree, size, c.backcolor, c.icon, yy,display);
             if(yy==0)
-                drawWithDegree(canvas,10,size/3,c.backcolor,String.valueOf(c.<CircleItem>get().getCount()),size/3,rc);
+                drawWithDegree(canvas,0,size/3,c.backcolor,String.valueOf(c.<CircleItem>get().getCount()),size/3,rc);
             touch.put(c, rc);
         }
     }

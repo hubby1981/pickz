@@ -11,7 +11,7 @@ public abstract class BaseCircleItem {
     public int degree = 0;
     public Bitmap icon=null;
     public boolean expose=false;
-    private int mover=10;
+    private int mover=20;
 
     public BaseCircleItem(Bitmap icon){
         this.icon = icon;

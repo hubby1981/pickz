@@ -38,6 +38,12 @@ public class CircleView extends ComposeView {
         collection.add(new CircleItem(bitmap2).text("work").units("hours").count(4).limit(10).color(color2) );
         collection.add(new CircleItem(bitmap3).text("fitness").count(2).units("hours").limit(3).color(color3) );
         collection.add(new CircleItem(bitmap4).text("bed").count(12).units("hours").limit(14).color(color4) );
+        collection.add(new CircleItem(bitmap1).text("coffee").count(0).max(5).limit(10).color(color1) );
+        collection.add(new CircleItem(bitmap2).text("work").units("hours").count(4).limit(10).color(color2) );
+        collection.add(new CircleItem(bitmap3).text("fitness").count(2).units("hours").limit(3).color(color3) );
+        collection.add(new CircleItem(bitmap4).text("bed").count(12).units("hours").limit(14).color(color4) );
+        collection.add(new CircleItem(bitmap1).text("coffee").count(0).max(5).limit(10).color(color1) );
+        collection.add(new CircleItem(bitmap2).text("work").units("hours").count(4).limit(10).color(color2) );
 
         this.collection = collection;
     }
@@ -81,16 +87,17 @@ public class CircleView extends ComposeView {
         Paint circleFill2 = new Paint();
         circleFill2.setStyle(Paint.Style.STROKE);
         circleFill2.setColor(Color.argb(255, 120, 200, 120));
+        Rect display2 = new Rect(display.left,display.top-display.height()/10,display.right,display.bottom-display.height()/10);
 
-        float diff = (float) (display.width() / 2.5) - (float) (display.width() / 2.7);
+        float diff = (float) (display2.width() / 2.5) - (float) (display2.width() / 2.7);
         circleFill2.setStrokeWidth(diff);
         circleFill4.setStrokeWidth(diff);
 
 
-        float left = display.exactCenterX() - (float) (display.width() / 2.6);
-        float top = display.exactCenterY() - (float) (display.width() / 2.6);
-        float right = display.exactCenterX() + (float) (display.width() / 2.6);
-        float bottom = display.exactCenterY() + (float) (display.width() / 2.6);
+        float left = display2.exactCenterX() - (float) (display2.width() / 2.6);
+        float top = display2.exactCenterY() - (float) (display2.width() / 2.6);
+        float right = display2.exactCenterX() + (float) (display2.width() / 2.6);
+        float bottom = display2.exactCenterY() + (float) (display2.width() / 2.6);
         int minutes = DateTimeHelper.getMinutesOfDay();
         int minutes2 = DateTimeHelper.getMinutesOfDay();
         CircleItem c = null;
@@ -113,33 +120,33 @@ public class CircleView extends ComposeView {
             canvas.drawArc(left, top, right, bottom, 0, DateTimeHelper.getDayAngle(minutes), true, circleFill2);
 
         }
-        canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.7), circleFill3);
-        canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), display.width() / 4, circleFill);
+        canvas.drawCircle(display2.exactCenterX(), display2.exactCenterY(), (float) (display2.width() / 2.7), circleFill3);
+        canvas.drawCircle(display2.exactCenterX(), display2.exactCenterY(), display2.width() / 4, circleFill);
 
         if(c!=null){
-            canvas.drawArc(display.exactCenterX()-display.width()/4 , display.exactCenterY()-display.width()/4 ,display.exactCenterX()+display.width()/4, display.exactCenterY()+display.width()/4, 0,180, true, circleFill6);
+            canvas.drawArc(display2.exactCenterX()-display2.width()/4 , display2.exactCenterY()-display2.width()/4 ,display2.exactCenterX()+display2.width()/4, display2.exactCenterY()+display2.width()/4, 0,180, true, circleFill6);
 
         }
 
-        canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.7), circleLine);
+        canvas.drawCircle(display2.exactCenterX(), display2.exactCenterY(), (float) (display2.width() / 2.7), circleLine);
 
-        canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), (float) (display.width() / 2.5), circleLine);
-        canvas.drawCircle(display.exactCenterX(), display.exactCenterY(), display.width() / 4, circleLine);
+        canvas.drawCircle(display2.exactCenterX(), display2.exactCenterY(), (float) (display2.width() / 2.5), circleLine);
+        canvas.drawCircle(display2.exactCenterX(), display2.exactCenterY(), display2.width() / 4, circleLine);
 
         float rc1 = (float) (diff * 2.3);
 
 
         if (collection != null) {
-            collection.onDraw(canvas, display, rc1);
+            collection.onDraw(canvas, display2, rc1);
 
             c = get( collection.getExposed());
             if (c != null) {
-                drawInfo(canvas, c.name, display, 0, 30);
-                drawInfo(canvas, c.getCounter(), display, 1.2f, 40);
+                drawInfo(canvas, c.name, display2, 0, 30);
+                drawInfo(canvas, c.getCounter(), display2, 1.2f, 40);
 
             } else {
-                drawInfo(canvas, new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date()), display, 0, 30);
-                drawInfo(canvas, new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH).format(new Date()), display, 1.2f, 40);
+                drawInfo(canvas, new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date()), display2, 0, 30);
+                drawInfo(canvas, new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH).format(new Date()), display2, 1.2f, 40);
 
             }
         }
