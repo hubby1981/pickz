@@ -12,7 +12,6 @@ public class CircleItem extends BaseCircleItem {
 
     private int counter=0;
 
-    public String name="";
     public String unit="";
     private int maxTime=5;
     private int maxCount=24;
@@ -25,10 +24,6 @@ public class CircleItem extends BaseCircleItem {
         return unit.equals("hours")?counter*60:maxTime>0?maxTime*counter:0;
     }
 
-    public CircleItem text(String text){
-        this.name = text;
-        return this;
-    }
 
     public CircleItem units(String unit){
         this.unit = unit;
@@ -53,6 +48,7 @@ public class CircleItem extends BaseCircleItem {
     public int getCount(){
         return counter;
     }
+
 
     public String getCounter(){
         return String.valueOf(counter).concat(" ").concat(unit);

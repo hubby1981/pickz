@@ -12,9 +12,26 @@ public abstract class BaseCircleItem {
     public Bitmap icon=null;
     public boolean expose=false;
     private int mover=20;
-
+    public String name="";
+    Runnable runAction=null;
+public boolean couldExpose = true;
     public BaseCircleItem(Bitmap icon){
         this.icon = icon;
+    }
+
+    public BaseCircleItem action(Runnable action){
+        this.runAction = action;
+        return this;
+    }
+    public BaseCircleItem exposing(boolean expose){
+        this.couldExpose = expose;
+        return this;
+    }
+
+
+    public BaseCircleItem exposed(boolean expose){
+        this.expose = expose;
+        return this;
     }
 
     public void move(){
@@ -28,6 +45,10 @@ public abstract class BaseCircleItem {
     }
 
 
+    public BaseCircleItem text(String text){
+        this.name = text;
+        return this;
+    }
 
     public boolean mustMoveL(){
         return degree<180 && degree>0;

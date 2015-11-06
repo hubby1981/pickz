@@ -10,8 +10,13 @@ public class DateTimeHelper {
     public static int getDayAngle(int minutes){
         return minutes / 4 ;
     }
+    public static int getMonthAngle(int days){
+        return days / 11 ;
+    }
 
-
+    public static int getYearAngle(int days){
+        return days / (int)4f ;
+    }
     public static int getMinutesOfDay()
     {
        Date d = new Date();
@@ -23,5 +28,25 @@ public class DateTimeHelper {
 
     }
 
+    public static int getDaysOfMonth()
+    {
+        Date d = new Date();
+        int minutes = 0;
 
+        minutes = d.getDay();
+
+        return minutes;
+
+    }
+
+    public static int getDaysOfYear()
+    {
+        Date d = new Date();
+        int minutes = 0;
+
+        minutes = d.getDay()*30;
+
+        return minutes;
+
+    }
 }

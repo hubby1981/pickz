@@ -21,12 +21,14 @@ public class CircleCollection {
     private List<BaseCircleItem> items = new LinkedList<>();
     private HashMap<BaseCircleItem, Rect> touch = new HashMap<>();
     private Rect display = null;
-    public CircleItem rotater = null;
+    public BaseCircleItem rotater = null;
     private boolean leftMove = true;
 
     public CircleCollection add(BaseCircleItem item) {
+        int size = 40;
+
         if (items.size() < max) {
-            item.degree = items.size() * 40 ;
+            item.degree = items.size() * size;
             items.add(item);
         }
         return this;
@@ -51,23 +53,23 @@ public class CircleCollection {
         for (BaseCircleItem c : items) {
             float yy = 0;
             if (c.expose) yy = size;
-            Rect rc = drawWithDegree(canvas, c.degree, size, c.backcolor, c.icon, yy,display);
-            if(yy==0)
-                drawWithDegree(canvas,0,size/3,c.backcolor,String.valueOf(c.<CircleItem>get().getCount()),size/3,rc);
+            Rect rc = drawWithDegree(canvas, c.degree, size, c.backcolor, c.icon, yy, display);
+            if (yy == 0 && c.getClass().getSimpleName().equals(CircleItem.class.getSimpleName()))
+                drawWithDegree(canvas, 0, size / 3, c.backcolor, String.valueOf(c.<CircleItem>get().getCount()), size / 2.5f, rc);
             touch.put(c, rc);
         }
     }
 
-    private Rect drawWithDegree(Canvas canvas, int degree, float size, int color, Bitmap icon, float yy,Rect display) {
-        float xc1 = (float) Math.sin(Math.toRadians(degree)) * (float) (display.width() / 3.5);
-        float yc1 = (float) Math.cos(Math.toRadians(degree)) * (float) (display.width() / 3.5);
+    private Rect drawWithDegree(Canvas canvas, int degree, float size, int color, Bitmap icon, float yy, Rect display) {
+        float xc1 = (float) Math.sin(Math.toRadians(degree)) * (float) (display.width() / 3.75);
+        float yc1 = (float) Math.cos(Math.toRadians(degree)) * (float) (display.width() / 3.75);
         float x = display.exactCenterX() + xc1;
         float y = display.exactCenterY() - yc1;
 
         y -= yy;
         float w = (float) (size / 1.1);
         Rect rc = new Rect((int) (x - w / 2), (int) (y - w / 2), (int) (x + w / 2), (int) (y + w / 2));
-        Rect rc1 = new Rect((int) (x -w), (int) (y - w ), (int) (x + w ), (int) (y + w ));
+        Rect rc1 = new Rect((int) (x - w), (int) (y - w), (int) (x + w), (int) (y + w));
 
 
         drawSmallCircle(canvas, x, y, size, color);
@@ -79,7 +81,7 @@ public class CircleCollection {
         return rc1;
     }
 
-    private Rect drawWithDegree(Canvas canvas, int degree, float size, int color,String text, float yy,Rect display) {
+    private Rect drawWithDegree(Canvas canvas, int degree, float size, int color, String text, float yy, Rect display) {
         float xc1 = (float) Math.sin(Math.toRadians(degree)) * (float) (display.width() / 3.5);
         float yc1 = (float) Math.cos(Math.toRadians(degree)) * (float) (display.width() / 3.5);
         float x = display.exactCenterX() + xc1;
@@ -90,7 +92,7 @@ public class CircleCollection {
         Rect rc = new Rect((int) (x - w / 2), (int) (y - w / 2), (int) (x + w / 2), (int) (y + w / 2));
         drawSmallCircle(canvas, x, y, size, color);
 
-        drawInfo(canvas, text, rc, 2, 1.5f);
+        drawInfo(canvas, text, rc, 2, 1f);
 
         return rc;
     }
@@ -104,7 +106,7 @@ public class CircleCollection {
         font.setTextSize(display.height() / size);
 
         float mm = font.measureText(text);
-        fy += y * font.getTextSize()/4;
+        fy += y * font.getTextSize() / 4;
 
         canvas.drawText(text, fx - mm / 2, fy, font);
     }
@@ -131,14 +133,22 @@ public class CircleCollection {
 
         for (Map.Entry<BaseCircleItem, Rect> c : touch.entrySet()) {
             if (c.getValue().contains(p.x, p.y)) {
+
                 leftMove = c.getKey().mustMoveL();
+
                 return c.getKey();
+
+
             }
         }
         return null;
     }
 
-    public void rotate(CircleItem rotater) {
+    public int size() {
+        return items.size();
+    }
+
+    public void rotate(BaseCircleItem rotater) {
         this.rotater = rotater;
     }
 
@@ -147,7 +157,10 @@ public class CircleCollection {
         if (rotater != null) {
             result = rotater.isMoved();
             if (result == true) {
-                rotater.expose = !rotater.expose;
+                if(rotater.couldExpose)
+                    rotater.expose = !rotater.expose;
+                if(rotater.runAction!=null)
+                    rotater.runAction.run();
                 rotater = null;
             }
         }
