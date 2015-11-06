@@ -159,8 +159,10 @@ public class CircleCollection {
             if (result == true) {
                 if(rotater.couldExpose)
                     rotater.expose = !rotater.expose;
-                if(rotater.runAction!=null)
+                if(rotater.runAction!=null) {
+                 if(rotater.couldExpose)rotater.expose = true;
                     rotater.runAction.run();
+                }
                 rotater = null;
             }
         }
