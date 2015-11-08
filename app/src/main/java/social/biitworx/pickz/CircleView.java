@@ -193,8 +193,8 @@ public class CircleView extends ComposeView {
         float top = display2.exactCenterY() - (float) (display2.width() / 2.6);
         float right = display2.exactCenterX() + (float) (display2.width() / 2.6);
         float bottom = display2.exactCenterY() + (float) (display2.width() / 2.6);
-        int minutes = DateTimeHelper.getMinutesOfDay();
-        int minutes2 = State == 0 ? DateTimeHelper.getMinutesOfDay() : State == 1 ? DateTimeHelper.getDaysOfMonth() : DateTimeHelper.getDaysOfYear();
+
+        int minutes = State == 0 ? DateTimeHelper.getMinutesOfDay() : State == 1 ? DateTimeHelper.getDaysOfMonth() : DateTimeHelper.getDaysOfYear();
         CircleItem c = null;
         if (collection != null) {
 
@@ -214,8 +214,8 @@ public class CircleView extends ComposeView {
 
         if (collection != null && collection.rotater == null) {
 
-            int angle = State == 0 ? DateTimeHelper.getDayAngle(minutes) : State == 1 ? DateTimeHelper.getMonthAngle(minutes) : DateTimeHelper.getYearAngle(minutes);
-            ;
+            int angle = State == 0 ? DateTimeHelper.getDayAngle(minutes) : (int) (State == 1 ? DateTimeHelper.getMonthAngle(minutes) : DateTimeHelper.getYearAngle(minutes));
+
             canvas.drawArc(left, top, right, bottom, 0, angle, true, circleFill2);
 
         }
@@ -307,6 +307,11 @@ public class CircleView extends ComposeView {
                     if (c2 != null) {
                         drawInfo(canvas, c2.name, rcDown2, 0, 20, false);
 
+
+                    }
+                    else
+                    {
+                        drawInfo(canvas, "Select", rcDown2, 0, 20, false);
 
                     }
                 }
