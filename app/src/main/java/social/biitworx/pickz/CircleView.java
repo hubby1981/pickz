@@ -154,9 +154,9 @@ public class CircleView extends ComposeView {
 
         Paint circleLine = new Paint();
         circleLine.setStyle(Paint.Style.STROKE);
-        circleLine.setColor(Values.BACK_MENU);
-        circleLine.setShadowLayer(40, 0, 0, Values.BACK_MENU_SHADOW);
-        circleLine.setStrokeWidth(2);
+        circleLine.setColor(Color.argb(100,50,50,50));
+        circleLine.setShadowLayer(20, 0, 0,Color.DKGRAY);
+        circleLine.setStrokeWidth(5);
         circleLine.setAntiAlias(true);
 
         CircleColors colors = Values.get(State);
@@ -263,6 +263,9 @@ public class CircleView extends ComposeView {
         Rect rcDown = new Rect(display2.left, (int) (display.bottom - display.height() / 2.4), display2.right, display.bottom);
         Rect rcDown1 = new Rect(rcDown.left, rcDown.top, rcDown.right - rcDown.width() / 2, rcDown.bottom);
         Rect rcDown2 = new Rect(rcDown.left + rcDown.width() / 2, rcDown.top, rcDown.right, rcDown.bottom);
+        int mm=10;
+        Rect rcDown11 = new Rect(rcDown.left-rcDown.width()/mm, rcDown.top-rcDown.width()/mm, (rcDown.right - rcDown.width() / 2)+rcDown.width()/mm, rcDown.bottom+rcDown.width()/mm);
+        Rect rcDown22 = new Rect((rcDown.left + rcDown.width() / 2)-rcDown.width()/mm, rcDown.top-rcDown.width()/mm, rcDown.right+rcDown.width()/mm, rcDown.bottom+rcDown.width()/mm);
 
 
         if (collectionLeft != null) {
@@ -280,11 +283,11 @@ public class CircleView extends ComposeView {
             canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), (float) (rcDown1.width() / 2.2), circleFillLeft2);
             canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), (float) (rcDown1.width() / 2.2), circleLine);
 
-            canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), rcDown1.width() / 4, circleFillLeft);
-            canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), rcDown1.width() / 4, circleLine);
+            canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), rcDown1.width() / 3, circleFillLeft);
+            canvas.drawCircle(rcDown1.exactCenterX(), rcDown1.exactCenterY(), rcDown1.width() / 3, circleLine);
 
 
-            collectionLeft.onDraw(canvas, rcDown1, rc1 / 1.75f);
+            collectionLeft.onDraw(canvas, rcDown11, rc1 / 1.2f);
             if (c1 != null) {
                 drawInfo(canvas, c1.name, rcDown1, 0, 20, false);
 
@@ -297,10 +300,10 @@ public class CircleView extends ComposeView {
                     canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), (float) (rcDown2.width() / 2.2), circleFillLeft2);
                     canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), (float) (rcDown2.width() / 2.2), circleLine);
 
-                    canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), rcDown2.width() / 4, circleFillLeft);
-                    canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), rcDown2.width() / 4, circleLine);
+                    canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), rcDown2.width() / 3, circleFillLeft);
+                    canvas.drawCircle(rcDown2.exactCenterX(), rcDown2.exactCenterY(), rcDown2.width() / 3, circleLine);
 
-                    collectionRight.onDraw(canvas, rcDown2, rc1 / 1.75f);
+                    collectionRight.onDraw(canvas, rcDown22, rc1 / 1.2f);
                     if (c2 != null) {
                         drawInfo(canvas, c2.name, rcDown2, 0, 20, false);
 
