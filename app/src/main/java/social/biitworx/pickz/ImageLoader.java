@@ -14,18 +14,7 @@ public class ImageLoader {
 
 
     public static int getId(String icon){
-        Class c = null;
-        try {
-            c = Class.forName(MainActivity.context.getPackageName()+".R");
-            Field f = c.getDeclaredField("drawable");
-            Class d = f.getDeclaringClass();
-            Field f2 = d.getDeclaredField(icon);
-            int resId = f2.getInt(null);
-                    return resId;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-return 0;
+        return MainActivity.context.getResources().getIdentifier(icon,"drawable",MainActivity.context.getPackageName());
     }
     public static Bitmap loadIcon(String icon) {
        return BitmapFactory.decodeResource(MainActivity.context.getResources(),getId(icon));

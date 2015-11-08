@@ -6,33 +6,30 @@ import android.graphics.BitmapFactory;
 /**
  * Created by marcel.weissgerber on 06.11.2015.
  */
-public class SocialMenuCircles  {
+public class SocialMenuCircles {
     protected static CircleCollection collection;
+    private static String text = "pick_social_";
 
-static
-    {
+    static {
         collection = new CircleCollection();
         init();
     }
-    private static void init(){
-        Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_social_google);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_social_facebook);
-        Bitmap bitmap3 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_social_instagram);
-        Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_social_twitter);
 
-        collection.add(new MenuCircleItem(bitmap1).color(Values.BACK_SOCIAL).exposing(true).text("Google+").action(new Runnable() {
+    private static void init() {
+        collection.add(ImageLoader.createMenuItem("Google+", text.concat("google"), Values.BACK_SOCIAL, new Runnable() {
             @Override
             public void run() {
                 CircleView.collectionRight = SocialMenuCirclesGoogle.get();
+
             }
         }));
-        collection.add(new MenuCircleItem(bitmap2).color(Values.BACK_SOCIAL).text("Facebook"));
-        collection.add(new MenuCircleItem(bitmap3).color(Values.BACK_SOCIAL).text("Instagram"));
-        collection.add(new MenuCircleItem(bitmap4).color(Values.BACK_SOCIAL).text("Twitter"));
+        collection.add(ImageLoader.createMenuItem("Facebook", text.concat("facebook"), Values.BACK_SOCIAL));
+        collection.add(ImageLoader.createMenuItem("Instagram", text.concat("instagram"), Values.BACK_SOCIAL));
+        collection.add(ImageLoader.createMenuItem("Twitter", text.concat("twitter"), Values.BACK_SOCIAL));
 
     }
 
-    public static CircleCollection get(){
+    public static CircleCollection get() {
         return collection;
     }
 }
