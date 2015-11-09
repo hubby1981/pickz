@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by marcel.weissgerber on 05.11.2015.
@@ -24,11 +26,18 @@ public class CircleCollection {
     public BaseCircleItem rotater = null;
     private boolean leftMove = true;
 
+    private int size=40;
+
     public CircleCollection add(BaseCircleItem item) {
-        int size = 40;
 
         if (items.size() < max) {
-            item.degree = items.size() * size;
+            if(items.size()==0){
+                item.degree = items.size() * size;
+            }
+            else{
+                item.degree = items.get(items.size()-1).degree+size;
+            }
+
             items.add(item);
         }
         return this;
@@ -97,6 +106,7 @@ public class CircleCollection {
         return rc;
     }
 
+
     private void drawInfo(Canvas canvas, String text, Rect display, float y, float size) {
         float fx = display.exactCenterX();
         float fy = display.exactCenterY();
@@ -111,7 +121,7 @@ public class CircleCollection {
         canvas.drawText(text, fx - mm / 2, fy, font);
     }
 
-    private void drawSmallCircle(Canvas canvas, float x, float y, float radius, int color) {
+    public void drawSmallCircle(Canvas canvas, float x, float y, float radius, int color) {
         Paint circleLine = new Paint();
         circleLine.setStyle(Paint.Style.FILL);
         circleLine.setColor(color);
@@ -122,6 +132,19 @@ public class CircleCollection {
 
 
     }
+
+    public boolean contains(BaseCircleItem item) {
+
+        for (BaseCircleItem c : items)
+            if (c.id == item.id)
+                return true;
+        return false;
+    }
+
+    public boolean drag(BaseCircleItem item,int x,int y){
+        return touch.get(item).contains(x,y);
+    }
+
 
     public void allUnExpose() {
         for (BaseCircleItem c : items) c.expose = false;
@@ -144,6 +167,8 @@ public class CircleCollection {
         return null;
     }
 
+
+
     public int size() {
         return items.size();
     }
@@ -157,10 +182,10 @@ public class CircleCollection {
         if (rotater != null) {
             result = rotater.isMoved();
             if (result == true) {
-                if(rotater.couldExpose)
+                if (rotater.couldExpose)
                     rotater.expose = !rotater.expose;
-                if(rotater.runAction!=null) {
-                 if(rotater.couldExpose)rotater.expose = true;
+                if (rotater.runAction != null) {
+                    if (rotater.couldExpose) rotater.expose = true;
                     rotater.runAction.run();
                 }
                 rotater = null;
@@ -169,8 +194,30 @@ public class CircleCollection {
         return result;
     }
 
+    public void remove(BaseCircleItem item){
+        items.remove(item);
+        arange();
+    }
+
+    public void arange()
+    {
+        int deg = 0;
+        for(BaseCircleItem c : items){
+            c.degree = deg;
+            deg+=size;
+        }
+    }
+
     public BaseCircleItem getExposed() {
         for (BaseCircleItem c : items) if (c.expose) return c;
+        return null;
+    }
+
+    public <T> T getId(UUID id){
+        for(BaseCircleItem c:items){
+            if(c.id == id)
+                return (T)c;
+        }
         return null;
     }
 

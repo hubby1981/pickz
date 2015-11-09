@@ -24,6 +24,9 @@ public class CircleView extends ComposeView {
     public static CircleCollection collectionRight = new CircleCollection();
 
     public static int State = 0;
+    private DragMenuItem dragMenuItem;
+
+    Rect circle = null;
 
     public CircleView() {
         CircleCollection collection = new CircleCollection();
@@ -154,8 +157,8 @@ public class CircleView extends ComposeView {
 
         Paint circleLine = new Paint();
         circleLine.setStyle(Paint.Style.STROKE);
-        circleLine.setColor(Color.argb(100,50,50,50));
-        circleLine.setShadowLayer(20, 0, 0,Color.DKGRAY);
+        circleLine.setColor(Color.argb(100, 50, 50, 50));
+        circleLine.setShadowLayer(20, 0, 0, Color.DKGRAY);
         circleLine.setStrokeWidth(5);
         circleLine.setAntiAlias(true);
 
@@ -193,7 +196,7 @@ public class CircleView extends ComposeView {
         float top = display2.exactCenterY() - (float) (display2.width() / 2.6);
         float right = display2.exactCenterX() + (float) (display2.width() / 2.6);
         float bottom = display2.exactCenterY() + (float) (display2.width() / 2.6);
-
+        circle = new Rect((int) left + display2.width() / 8, (int) top + display2.width() / 8, (int) right - display2.width() / 8, (int) bottom - display2.width() / 8);
         int minutes = State == 0 ? DateTimeHelper.getMinutesOfDay() : State == 1 ? DateTimeHelper.getDaysOfMonth() : DateTimeHelper.getDaysOfYear();
         CircleItem c = null;
         if (collection != null) {
@@ -237,7 +240,9 @@ public class CircleView extends ComposeView {
 
         if (collection != null) {
             collection.onDraw(canvas, display2, rc1);
-
+            BaseCircleItem c4 = collection.getExposed();
+            if (c4 != null && dragMenuItem != null)
+                c4.expose = false;
             c = get(collection.getExposed());
             if (c != null) {
                 drawInfo(canvas, c.name, display2, -0.3f, 30, true);
@@ -263,9 +268,9 @@ public class CircleView extends ComposeView {
         Rect rcDown = new Rect(display2.left, (int) (display.bottom - display.height() / 2.4), display2.right, display.bottom);
         Rect rcDown1 = new Rect(rcDown.left, rcDown.top, rcDown.right - rcDown.width() / 2, rcDown.bottom);
         Rect rcDown2 = new Rect(rcDown.left + rcDown.width() / 2, rcDown.top, rcDown.right, rcDown.bottom);
-        int mm=10;
-        Rect rcDown11 = new Rect(rcDown.left-rcDown.width()/mm, rcDown.top-rcDown.width()/mm, (rcDown.right - rcDown.width() / 2)+rcDown.width()/mm, rcDown.bottom+rcDown.width()/mm);
-        Rect rcDown22 = new Rect((rcDown.left + rcDown.width() / 2)-rcDown.width()/mm, rcDown.top-rcDown.width()/mm, rcDown.right+rcDown.width()/mm, rcDown.bottom+rcDown.width()/mm);
+        int mm = 10;
+        Rect rcDown11 = new Rect(rcDown.left - rcDown.width() / mm, rcDown.top - rcDown.width() / mm, (rcDown.right - rcDown.width() / 2) + rcDown.width() / mm, rcDown.bottom + rcDown.width() / mm);
+        Rect rcDown22 = new Rect((rcDown.left + rcDown.width() / 2) - rcDown.width() / mm, rcDown.top - rcDown.width() / mm, rcDown.right + rcDown.width() / mm, rcDown.bottom + rcDown.width() / mm);
 
 
         if (collectionLeft != null) {
@@ -306,11 +311,15 @@ public class CircleView extends ComposeView {
                     collectionRight.onDraw(canvas, rcDown22, rc1 / 1.2f);
                     if (c2 != null) {
                         drawInfo(canvas, c2.name, rcDown2, 0, 20, false);
+                        if (dragMenuItem != null) {
+                            int si = (int) (rc1);
+                            Rect rcDrag = new Rect(dragMenuItem.position.x - si / 2, dragMenuItem.position.y - si / 2, dragMenuItem.position.x + si / 2, dragMenuItem.position.y + si / 2);
+                            collectionRight.drawSmallCircle(canvas, dragMenuItem.position.x, dragMenuItem.position.y, si, dragMenuItem.item.backcolor);
+                            BitmapHelper.drawIn(canvas, dragMenuItem.item.icon, rcDrag, 0);
 
+                        }
 
-                    }
-                    else
-                    {
+                    } else {
                         drawInfo(canvas, "Select", rcDown2, 0, 20, false);
 
                     }
@@ -355,6 +364,9 @@ public class CircleView extends ComposeView {
                     c1.plus();
                 } else if (c1 != null && minus != null && minus.contains(p.x, p.y)) {
                     c1.minus();
+                    if (c1.getCount() <= 0) {
+                        collection.remove(c1);
+                    }
                 } else {
 
                     collection.allUnExpose();
@@ -388,5 +400,52 @@ public class CircleView extends ComposeView {
         }
     }
 
+    @Override
+    public void checkMoveDown(Point p) {
+
+        if (collectionRight != null) {
+            BaseCircleItem item = collectionRight.getExposed();
+
+            if (item != null && dragMenuItem == null) {
+                if (collectionRight.drag(item, p.x, p.y)) {
+                    dragMenuItem = new DragMenuItem(item.<MenuCircleItem>get(), p);
+                }
+            }
+
+            if (dragMenuItem != null) {
+                dragMenuItem.position = p;
+            }
+        }
+    }
+
+    @Override
+    public void releaseDrag() {
+
+        if (dragMenuItem != null) {
+
+            if (circle.contains(dragMenuItem.position.x, dragMenuItem.position.y)) {
+
+                if (!collection.contains(dragMenuItem.item)) {
+                    dragMenuItem.item.expose = true;
+                    collection.add(new CircleItem(dragMenuItem.item.icon).count(1).limit(10).color(dragMenuItem.item.backcolor).text(dragMenuItem.item.name).oldid(dragMenuItem.item.id));
+                } else {
+                    CircleItem c = collection.getId(dragMenuItem.item.id);
+                    if (c != null) {
+                        c.count(c.getCount() + 1);
+                    }
+                }
+                BaseCircleItem item = collection.getId(dragMenuItem.item.id);
+                if (item != null) {
+                    if (item.degree == 0)
+                        item.expose = true;
+                    else
+                        collection.rotate(item);
+
+                }
+
+            }
+            dragMenuItem = null;
+        }
+    }
 
 }

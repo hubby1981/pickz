@@ -58,4 +58,14 @@ public class MenuView extends ComposeView {
     public void checkTouchDown(Point p) {
 
     }
+
+    @Override
+    public void checkMoveDown(Point p) {
+
+    }
+    @Override
+    public void releaseDrag() {
+
+    }
+
 }

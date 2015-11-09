@@ -16,30 +16,42 @@ import java.util.List;
 public class ComposedDrawView extends View {
 
     private List<ComposeView> views = new ArrayList<>();
+
     public ComposedDrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void registerView(ComposeView view ){
+    public void registerView(ComposeView view) {
         views.add(view);
     }
 
 
     @Override
-    protected void onDraw(Canvas canvas){
+    protected void onDraw(Canvas canvas) {
 
-        for(ComposeView v : views){
+        for (ComposeView v : views) {
             v.onDraw(canvas);
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getActionMasked() == MotionEvent.ACTION_DOWN){
-            for(ComposeView v : views){
-                v.checkTouchDown(new Point((int)event.getX(),(int)event.getY()));
+
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            for (ComposeView v : views) {
+                v.checkMoveDown(new Point((int) event.getX(), (int) event.getY()));
             }
         }
-        return false;
+        else if (event.getAction() == MotionEvent.ACTION_UP) {
+            for (ComposeView v : views) {
+                v.checkTouchDown(new Point((int) event.getX(), (int) event.getY()));
+            }
+            for (ComposeView v : views) {
+                v.releaseDrag();
+            }
+        }
+
+
+        return true;
     }
 }

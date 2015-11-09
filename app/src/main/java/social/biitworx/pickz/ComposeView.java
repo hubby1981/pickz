@@ -20,4 +20,8 @@ public abstract class ComposeView {
     public abstract void onDrawChild(Canvas canvas);
 
     public abstract void checkTouchDown(Point p);
+
+    public abstract void checkMoveDown(Point p);
+
+    public abstract void releaseDrag();
 }
