@@ -15,7 +15,8 @@
                                 "name" : "Back",
                                 "id" : "513",
                                 "icon" : "pick_back",
-                                "color" : "5"
+                                "color" : "5",
+                                "exposing":"false"
                             }
                             ]
                             }

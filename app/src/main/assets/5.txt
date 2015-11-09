@@ -8,10 +8,10 @@
             "color" : "5"
         },
          {
-                    "name" : "Facebook",
-                    "id" : "52",
-                    "icon" : "facebook",
-                                                   "color" : "5"
+            "name" : "Facebook",
+            "id" : "52",
+            "icon" : "facebook",
+            "color" : "5"
 
                 },
                  {

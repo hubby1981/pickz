@@ -65,8 +65,16 @@ public class CircleCollection {
                     String ico = circle.getString("icon");
                     if(!ico.equals("pick_back"))
                         ico = tag.concat(ico);
-                    BaseCircleItem item = new MenuCircleItem(ImageLoader.loadIcon(ico)).text(circle.getString("name")).aid(circle.getString("id"));
+                    BaseCircleItem item = new MenuCircleItem(ImageLoader.loadIcon(ico)).text(circle.getString("name")).oldid(circle.getString("id")).aid(circle.getString("id"));
                     Runnable action = CircleActions.getAction(item.actionId);
+                    if(circle.has("expose") && circle.getString("expose").equals("true"))
+                    {
+                        item.expose=true;
+                    }
+                    if(circle.has("exposing") && circle.getString("exposing").equals("false"))
+                    {
+                        item.exposing(false);
+                    }
                     if(action!=null)item.action(action);
                     item.color(CircleMenuColors.getColor(circle.getString("color")));
                     add(item);
@@ -92,8 +100,9 @@ public class CircleCollection {
         }
         for (BaseCircleItem c : items) {
             float yy = 0;
-            if (c.expose) yy = size;
-            Rect rc = drawWithDegree(canvas, c.degree, size, c.backcolor, c.icon, yy, display);
+            float masterSize=1;
+            if (c.expose) {yy=size/1.5f;masterSize=1.15f;}
+            Rect rc = drawWithDegree(canvas, c.degree, size*masterSize, c.backcolor, c.icon, yy, display);
             if (yy == 0 && c.getClass().getSimpleName().equals(CircleItem.class.getSimpleName()))
                 drawWithDegree(canvas, 0, size / 3, c.backcolor, String.valueOf(c.<CircleItem>get().getCount()), size / 2.5f, rc);
             touch.put(c, rc);
@@ -167,7 +176,7 @@ public class CircleCollection {
     public boolean contains(BaseCircleItem item) {
 
         for (BaseCircleItem c : items)
-            if (c.id == item.id)
+            if (c.id.equals(item.id))
                 return true;
         return false;
     }
@@ -244,9 +253,9 @@ public class CircleCollection {
         return null;
     }
 
-    public <T> T getId(UUID id){
+    public <T> T getId(String id){
         for(BaseCircleItem c:items){
-            if(c.id == id)
+            if(c.id.equals( id))
                 return (T)c;
         }
         return null;

@@ -5,7 +5,8 @@
             "name" : "Today",
             "id" : "7",
             "icon" : "day",
-                                      "color" : "7"
+                                      "color" : "7",
+                                      "expose":"true"
 
         },
         {

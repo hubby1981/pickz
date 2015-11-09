@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by marcel.weissgerber on 06.11.2015.
  */
 public abstract class BaseCircleItem {
-    public UUID id = UUID.randomUUID();
+    public String id = "0";
     public int backcolor = android.graphics.Color.argb(255, 100, 100, 100);
     public int degree = 0;
     public Bitmap icon = null;
@@ -37,7 +37,7 @@ public abstract class BaseCircleItem {
         return this;
     }
 
-    public BaseCircleItem oldid(UUID id){
+    public BaseCircleItem oldid(String id){
         this.id = id;
         return this;
     }
