@@ -1,0 +1,21 @@
+{
+    "tag" : "pick_social_google_",
+    "circles":[
+        {
+            "name" : "Upload",
+            "id" : "511",
+            "icon" : "share",
+            "color" : "5"
+        }, {
+                      "name" : "Locate",
+                      "id" : "512",
+                      "icon" : "locate",
+                      "color" : "5"
+                  }, {
+                                "name" : "Back",
+                                "id" : "513",
+                                "icon" : "pick_back",
+                                "color" : "5"
+                            }
+                            ]
+                            }

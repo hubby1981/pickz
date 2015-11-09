@@ -7,6 +7,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -25,7 +29,7 @@ public class CircleCollection {
     private Rect display = null;
     public BaseCircleItem rotater = null;
     private boolean leftMove = true;
-
+    public String tag ="";
     private int size=40;
 
     public CircleCollection add(BaseCircleItem item) {
@@ -45,6 +49,33 @@ public class CircleCollection {
 
     public boolean isExposedHit(Point p, CircleItem c) {
         return touch != null && touch.containsKey(c) && touch.get(c).contains(p.x, p.y);
+
+    }
+
+    public void  readMenuCircle(JSONObject object){
+
+        try {
+            tag = object.getString("tag");
+            JSONArray circles = object.getJSONArray("circles");
+            for(int i =0;i<circles.length();i++){
+                JSONObject circle = circles.getJSONObject(i);
+                if(circle!=null){
+                    Bitmap icon = null;
+
+                    String ico = circle.getString("icon");
+                    if(!ico.equals("pick_back"))
+                        ico = tag.concat(ico);
+                    BaseCircleItem item = new MenuCircleItem(ImageLoader.loadIcon(ico)).text(circle.getString("name")).aid(circle.getString("id"));
+                    Runnable action = CircleActions.getAction(item.actionId);
+                    if(action!=null)item.action(action);
+                    item.color(CircleMenuColors.getColor(circle.getString("color")));
+                    add(item);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

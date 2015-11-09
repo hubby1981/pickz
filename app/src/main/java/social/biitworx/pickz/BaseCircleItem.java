@@ -17,6 +17,8 @@ public abstract class BaseCircleItem {
     public String name = "";
     Runnable runAction = null;
     public boolean couldExpose = true;
+    public String actionId;
+
 
     public BaseCircleItem(Bitmap icon) {
         this.icon = icon;
@@ -26,7 +28,10 @@ public abstract class BaseCircleItem {
         this.runAction = action;
         return this;
     }
-
+    public BaseCircleItem aid(String id) {
+        this.actionId = id;
+        return this;
+    }
     public BaseCircleItem exposing(boolean expose) {
         this.couldExpose = expose;
         return this;

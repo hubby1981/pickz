@@ -1,0 +1,32 @@
+{
+    "tag" : "pick_social_",
+    "circles":[
+        {
+            "name" : "Google+",
+            "id" : "51",
+            "icon" : "google",
+            "color" : "5"
+        },
+         {
+                    "name" : "Facebook",
+                    "id" : "52",
+                    "icon" : "facebook",
+                                                   "color" : "5"
+
+                },
+                 {
+                            "name" : "Instagram",
+                            "id" : "53",
+                            "icon" : "instagram",
+                                                            "color" : "5"
+
+                        },
+                         {
+                                    "name" : "Twitter",
+                                    "id" : "54",
+                                    "icon" : "twitter",
+                                                                  "color" : "5"
+
+                                }
+    ]
+}

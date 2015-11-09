@@ -1,0 +1,68 @@
+{
+    "tag" : "pick_",
+    "circles":[
+        {
+            "name" : "Today",
+            "id" : "7",
+            "icon" : "day",
+                                      "color" : "7"
+
+        },
+        {
+            "name" : "Month",
+            "id" : "8",
+            "icon" : "month",
+                                        "color" : "8"
+
+        },
+        {
+            "name" : "Year",
+            "id" : "9",
+            "icon" : "year",
+                                       "color" : "9"
+
+        },
+         {
+                            "name" : "Personal",
+                            "id" : "1",
+                            "icon" : "personal",
+                                                           "color" : "1"
+
+                },
+                 {
+                                    "name" : "Sport",
+                                    "id" : "2",
+                                    "icon" : "sport",
+                                                                "color" : "2"
+
+                        },
+                         {
+                                            "name" : "Vehicles",
+                                            "id" : "3",
+                                            "icon" : "vehicles",
+                                                                           "color" : "3"
+
+                                },
+                                 {
+                                                    "name" : "Drink & Food",
+                                                    "id" : "4",
+                                                    "icon" : "drinkfood",
+                                                                                    "color" : "4"
+
+                                        },
+        {
+                    "name" : "Social",
+                    "id" : "5",
+                    "icon" : "social",
+                                                 "color" : "5"
+
+        },
+            {
+                           "name" : "Play",
+                           "id" : "6",
+                           "icon" : "play",
+                                                      "color" : "6"
+
+               }
+    ]
+}

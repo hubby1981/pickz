@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -38,15 +41,6 @@ public class CircleView extends ComposeView {
         int color3 = Color.argb(255, 120, 60, 20);
         int color4 = Color.argb(255, 200, 60, 20);
 
-        int color5 = Values.BACK_CIRCLE_TODAY;
-        int color6 = Values.BACK_CIRCLE_MONTH;
-        int color7 = Values.BACK_CIRCLE_YEAR;
-        int color8 = Values.BACK_PERSONAL;
-        int color9 = Values.BACK_SPORT;
-        int color10 = Values.BACK_VEHICLES;
-        int color11 = Values.BACK_DRINKFOOD;
-        int color12 = Values.BACK_SOCIAL;
-        int color13 = Values.BACK_PLAY;
 
 
         Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_coffee);
@@ -55,86 +49,15 @@ public class CircleView extends ComposeView {
         Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_bed);
 
 
-        Bitmap bitmap5 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_day);
-        Bitmap bitmap6 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_month);
-        Bitmap bitmap7 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_year);
-        Bitmap bitmap8 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_personal);
-        Bitmap bitmap9 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_sport);
-        Bitmap bitmap10 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_vehicles);
-        Bitmap bitmap11 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_drinkfood);
-        Bitmap bitmap12 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_social);
-        Bitmap bitmap13 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_play);
 
+
+
+        collectionLeft.readMenuCircle(FileHelper.getObject("menu_circles.txt"));
 
         collection.add(new CircleItem(bitmap1).count(0).max(5).limit(10).color(color1).text("coffee"));
         collection.add(new CircleItem(bitmap2).units("hours").count(4).limit(10).color(color2).text("work"));
         collection.add(new CircleItem(bitmap3).count(2).units("hours").limit(3).color(color3).text("fitness"));
         collection.add(new CircleItem(bitmap4).count(12).units("hours").limit(14).color(color4).text("bed"));
-
-        collectionLeft.add(new MenuCircleItem(bitmap5).color(color5).exposed(true).text("Today").action(new Runnable() {
-            @Override
-            public void run() {
-                State = 0;
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap6).color(color6).text("Month").action(new Runnable() {
-            @Override
-            public void run() {
-                State = 1;
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap7).color(color7).text("Year").action(new Runnable() {
-            @Override
-            public void run() {
-                State = 2;
-                CircleView.collectionRight = new CircleCollection();
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap8).color(color8).text("Personal").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap9).color(color9).text("Sport").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap10).color(color10).text("Vehicle").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap11).color(color11).text("Food").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap12).color(color12).text("Social").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = SocialMenuCircles.get();
-            }
-        }));
-        collectionLeft.add(new MenuCircleItem(bitmap13).color(color13).text("Play").action(new Runnable() {
-            @Override
-            public void run() {
-                CircleView.collectionRight = new CircleCollection();
-
-            }
-        }));
 
         this.collection = collection;
         this.collectionLeft = collectionLeft;
