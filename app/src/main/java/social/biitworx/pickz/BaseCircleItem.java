@@ -18,6 +18,9 @@ public abstract class BaseCircleItem {
     Runnable runAction = null;
     public boolean couldExpose = true;
     public String actionId;
+    public String parentId;
+
+    public CircleCollection subs;
 
 
     public BaseCircleItem(Bitmap icon) {
@@ -39,6 +42,11 @@ public abstract class BaseCircleItem {
 
     public BaseCircleItem oldid(String id){
         this.id = id;
+        return this;
+    }
+
+    public BaseCircleItem parentId(String id){
+        this.parentId = parentId;
         return this;
     }
 

@@ -30,6 +30,7 @@ public class CircleCollection {
     public BaseCircleItem rotater = null;
     private boolean leftMove = true;
     public String tag ="";
+    public String id="";
     private int size=40;
 
     public CircleCollection add(BaseCircleItem item) {
@@ -47,15 +48,37 @@ public class CircleCollection {
         return this;
     }
 
+    public BaseCircleItem addItem(BaseCircleItem item) {
+
+        if (items.size() < max) {
+            if(items.size()==0){
+                item.degree = items.size() * size;
+            }
+            else{
+                item.degree = items.get(items.size()-1).degree+size;
+            }
+
+            items.add(item);
+        }
+        return item;
+    }
+
     public boolean isExposedHit(Point p, CircleItem c) {
         return touch != null && touch.containsKey(c) && touch.get(c).contains(p.x, p.y);
 
+    }
+
+    public BaseCircleItem getLast(){
+
+        return items.size()>0? items.get(items.size()-1):null;
     }
 
     public void  readMenuCircle(JSONObject object){
 
         try {
             tag = object.getString("tag");
+            id = object.getString("id");
+
             JSONArray circles = object.getJSONArray("circles");
             for(int i =0;i<circles.length();i++){
                 JSONObject circle = circles.getJSONObject(i);
@@ -67,6 +90,7 @@ public class CircleCollection {
                         ico = tag.concat(ico);
                     BaseCircleItem item = new MenuCircleItem(ImageLoader.loadIcon(ico)).text(circle.getString("name")).oldid(circle.getString("id")).aid(circle.getString("id"));
                     Runnable action = CircleActions.getAction(item.actionId);
+                    item.parentId(id);
                     if(circle.has("expose") && circle.getString("expose").equals("true"))
                     {
                         item.expose=true;
@@ -103,8 +127,16 @@ public class CircleCollection {
             float masterSize=1;
             if (c.expose) {yy=size/1.5f;masterSize=1.15f;}
             Rect rc = drawWithDegree(canvas, c.degree, size*masterSize, c.backcolor, c.icon, yy, display);
-            if (yy == 0 && c.getClass().getSimpleName().equals(CircleItem.class.getSimpleName()))
-                drawWithDegree(canvas, 0, size / 3, c.backcolor, String.valueOf(c.<CircleItem>get().getCount()), size / 2.5f, rc);
+            if (yy == 0 && c.getClass().getSimpleName().equals(CircleItem.class.getSimpleName())) {
+             if(c.subs==null) {
+                 drawWithDegree(canvas, 0, size / 3, c.backcolor, String.valueOf(c.<CircleItem>get().getCount()), size / 2.5f, rc);
+             }
+             else
+             {
+                 drawWithDegree(canvas, 0, size / 3, c.backcolor, String.valueOf(c.subs.size()), size / 2.5f, rc);
+
+             }
+            }
             touch.put(c, rc);
         }
     }

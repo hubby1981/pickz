@@ -12,7 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,6 +28,8 @@ public class CircleView extends ComposeView {
     private CircleCollection collectionLeft = new CircleCollection();
     public static CircleCollection collectionRight = new CircleCollection();
 
+    public static List<BaseCircleItem> subCollection = new ArrayList<>();
+
     public static int State = 0;
     private DragMenuItem dragMenuItem;
 
@@ -36,14 +40,12 @@ public class CircleView extends ComposeView {
         CircleCollection collectionLeft = new CircleCollection();
         final CircleCollection collectionRight = new CircleCollection();
 
-        int color1 = Color.argb(255, 200, 20, 160);
-        int color2 = Color.argb(255, 70, 20, 200);
-        int color3 = Color.argb(255, 120, 60, 20);
-        int color4 = Color.argb(255, 200, 60, 20);
+        int color1 = Values.BACK_PERSONAL;
 
 
 
-        Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_coffee);
+
+        Bitmap bitmap1 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_personal);
         Bitmap bitmap2 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_work);
         Bitmap bitmap3 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_train);
         Bitmap bitmap4 = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.pick_bed);
@@ -54,10 +56,23 @@ public class CircleView extends ComposeView {
 
         collectionLeft.readMenuCircle(FileHelper.getObject("menu_circles.txt"));
 
-        collection.add(new CircleItem(bitmap1).count(0).max(5).limit(10).color(color1).text("coffee"));
-        collection.add(new CircleItem(bitmap2).units("hours").count(4).limit(10).color(color2).text("work"));
-        collection.add(new CircleItem(bitmap3).count(2).units("hours").limit(3).color(color3).text("fitness"));
-        collection.add(new CircleItem(bitmap4).count(12).units("hours").limit(14).color(color4).text("bed"));
+        BaseCircleItem item = collection.addItem(new CircleItem(bitmap1).count(0).max(5).limit(10).color(color1).text("coffee"));
+        item.subs = new CircleCollection();
+           item.subs.add(new CircleItem(bitmap2).units("hours").count(4).limit(10).color(color1).text("work"));
+           item.subs.add(new CircleItem(bitmap3).count(2).units("hours").limit(3).color(color1).text("fitness"));
+           item.subs.add(new CircleItem(bitmap4).count(12).units("hours").limit(14).color(color1).text("bed"));
+           item.subs.add(new CircleItem(ImageLoader.loadIcon("pick_back")).count(0).color(color1).text("Back").action(new Runnable() {
+               @Override
+               public void run() {
+                   if(CircleView.subCollection.size()>0)
+                       CircleView.subCollection.remove(CircleView.subCollection.get(CircleView.subCollection.size()-1));
+
+                   CircleCollection coll  = getSubCollection();
+                   if(coll!=null && coll.size()>0){
+                       coll.allUnExpose();
+                   }
+               }
+           }));
 
         this.collection = collection;
         this.collectionLeft = collectionLeft;
@@ -72,6 +87,17 @@ public class CircleView extends ComposeView {
 
     public <T> T get(BaseCircleItem item) {
         return item != null ? (T) item.get() : null;
+    }
+
+    private CircleCollection getSubCollection(){
+        if(subCollection.size()>0){
+            for(int x=subCollection.size()-1;x>=0;x++){
+                CircleCollection result = subCollection.get(x).subs;
+                if(result!=null&&result.size()>0)
+                    return result;
+            }
+        }
+        return collection;
     }
 
     @Override
@@ -122,9 +148,12 @@ public class CircleView extends ComposeView {
         circle = new Rect((int) left + display2.width() / 8, (int) top + display2.width() / 8, (int) right - display2.width() / 8, (int) bottom - display2.width() / 8);
         int minutes = State == 0 ? DateTimeHelper.getMinutesOfDay() : State == 1 ? DateTimeHelper.getDaysOfMonth() : DateTimeHelper.getDaysOfYear();
         CircleItem c = null;
-        if (collection != null) {
 
-            c = get(collection.getExposed());
+        CircleCollection coll = getSubCollection();
+
+        if (coll != null) {
+
+            c = get(coll.getExposed());
             if (c != null) {
                 if (c.countTime() > 0) {
                     minutes = c.countTime();
@@ -138,7 +167,7 @@ public class CircleView extends ComposeView {
         canvas.drawArc(left, top, right, bottom, 0, 360, true, circleFill4);
 
 
-        if (collection != null && collection.rotater == null) {
+        if (coll != null && coll.rotater == null) {
 
             int angle = State == 0 ? DateTimeHelper.getDayAngle(minutes) : (int) (State == 1 ? DateTimeHelper.getMonthAngle(minutes) : DateTimeHelper.getYearAngle(minutes));
 
@@ -161,13 +190,18 @@ public class CircleView extends ComposeView {
         float rc1 = (float) (diff * 2.3);
 
 
-        if (collection != null) {
-            collection.onDraw(canvas, display2, rc1);
-            BaseCircleItem c4 = collection.getExposed();
+        if (coll != null) {
+            coll.onDraw(canvas, display2, rc1);
+            BaseCircleItem c4 = coll.getExposed();
             if (c4 != null && dragMenuItem != null)
                 c4.expose = false;
-            c = get(collection.getExposed());
+            c = get(coll.getExposed());
             if (c != null) {
+                if(c.subs!=null && c.subs.size()>0) {
+                    subCollection.add(c);
+
+
+                }
                 drawInfo(canvas, c.name, display2, -0.3f, 30, true);
                 drawInfo(canvas, c.getCounter(), display2, 1.4f, 40, false);
 
@@ -275,24 +309,25 @@ public class CircleView extends ComposeView {
     @Override
     public void checkTouchDown(Point p) {
 
-        if (collection != null) {
-            CircleItem c = get(collection.canRotate(p));
+        CircleCollection coll = getSubCollection();
+        if (coll != null) {
+            CircleItem c = get(coll.canRotate(p));
 
 
             if (c != null) {
-                collection.rotate(c);
+                coll.rotate(c);
             } else {
-                CircleItem c1 = get(collection.getExposed());
+                CircleItem c1 = get(coll.getExposed());
                 if (c1 != null && plus != null && plus.contains(p.x, p.y)) {
                     c1.plus();
                 } else if (c1 != null && minus != null && minus.contains(p.x, p.y)) {
                     c1.minus();
                     if (c1.getCount() <= 0) {
-                        collection.remove(c1);
+                        coll.remove(c1);
                     }
                 } else {
 
-                    collection.allUnExpose();
+                    coll.allUnExpose();
                 }
             }
         }
@@ -343,26 +378,26 @@ public class CircleView extends ComposeView {
 
     @Override
     public void releaseDrag() {
-
+        CircleCollection coll = getSubCollection();
         if (dragMenuItem != null) {
 
             if (circle.contains(dragMenuItem.position.x, dragMenuItem.position.y)) {
 
-                if (!collection.contains(dragMenuItem.item)) {
+                if (!coll.contains(dragMenuItem.item)) {
                     dragMenuItem.item.expose = true;
-                    collection.add(new CircleItem(dragMenuItem.item.icon).count(1).limit(10).color(dragMenuItem.item.backcolor).text(dragMenuItem.item.name).oldid(dragMenuItem.item.id));
+                    coll.add(new CircleItem(dragMenuItem.item.icon).count(1).limit(10).color(dragMenuItem.item.backcolor).text(dragMenuItem.item.name).oldid(dragMenuItem.item.id).parentId(dragMenuItem.item.parentId));
                 } else {
-                    CircleItem c = collection.getId(dragMenuItem.item.id);
+                    CircleItem c = coll.getId(dragMenuItem.item.id);
                     if (c != null) {
                         c.count(c.getCount() + 1);
                     }
                 }
-                BaseCircleItem item = collection.getId(dragMenuItem.item.id);
+                BaseCircleItem item = coll.getId(dragMenuItem.item.id);
                 if (item != null) {
                     if (item.degree == 0)
                         item.expose = true;
                     else
-                        collection.rotate(item);
+                        coll.rotate(item);
 
                 }
 
