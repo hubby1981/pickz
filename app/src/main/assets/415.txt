@@ -1,0 +1,27 @@
+{
+    "tag" : "pick_drinkfood_drink_alcohol_",
+    "id":"415",
+    "circles":[
+        {
+            "name" : "Beer",
+            "id" : "4151",
+            "icon" : "beer",
+            "color" : "4"
+        }, {
+                      "name" : "Wine",
+                      "id" : "4152",
+                      "icon" : "wine",
+                      "color" : "4"
+                  }, {
+                                "name" : "Cocktail",
+                                "id" : "4153",
+                                "icon" : "cocktail",
+                                "color" : "4"
+                            }, {
+                                                                                                                                        "name" : "Back",
+                                                                                                                                        "id" : "4154",
+                                                                                                                                        "icon" : "pick_back",
+                                                                                                                                        "color" : "4",
+                                                                                                                                        "exposing":"false"
+                                                                                                                                    }
+                                                                                                                                    ]}

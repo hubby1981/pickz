@@ -1,0 +1,39 @@
+{
+    "tag" : "pick_drinkfood_drink_",
+    "id":"41",
+    "circles":[
+        {
+            "name" : "Coffee",
+            "id" : "411",
+            "icon" : "coffee",
+            "color" : "4"
+        },  {
+                      "name" : "Juice",
+                      "id" : "412",
+                      "icon" : "juice",
+                      "color" : "4"
+                  },  {
+                                         "name" : "Milk",
+                                         "id" : "413",
+                                         "icon" : "milk",
+                                         "color" : "4"
+                                     },  {
+                                                            "name" : "Water",
+                                                            "id" : "414",
+                                                            "icon" : "water",
+                                                            "color" : "4"
+                                                        },  {
+                                                                               "name" : "Alcohol",
+                                                                               "id" : "415",
+                                                                               "icon" : "alcohol",
+                                                                               "color" : "4"
+                                                                           }
+                                                                           , {
+                                                                                                           "name" : "Back",
+                                                                                                           "id" : "416",
+                                                                                                           "icon" : "pick_back",
+                                                                                                           "color" : "4",
+                                                                                                           "exposing":"false"
+                                                                                                       }
+                                                                           ]
+                                                                           }

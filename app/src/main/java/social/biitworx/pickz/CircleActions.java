@@ -73,6 +73,34 @@ public class CircleActions {
                 CircleView.collectionRight = CircleSubHelper.getCollection("51");
             }
         });
+        actions.put("41", new Runnable() {
+            @Override
+            public void run() {
+
+                CircleView.collectionRight = CircleSubHelper.getCollection("41");
+            }
+        });
+        actions.put("416", new Runnable() {
+            @Override
+            public void run() {
+
+                CircleView.collectionRight = CircleSubHelper.getCollection("4");
+            }
+        });
+        actions.put("4153", new Runnable() {
+            @Override
+            public void run() {
+
+                CircleView.collectionRight = CircleSubHelper.getCollection("41");
+            }
+        });
+        actions.put("415", new Runnable() {
+            @Override
+            public void run() {
+
+                CircleView.collectionRight = CircleSubHelper.getCollection("415");
+            }
+        });
         actions.put("513", new Runnable() {
             @Override
             public void run() {
