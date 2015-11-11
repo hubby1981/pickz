@@ -1,0 +1,36 @@
+{
+    "tag" : "pick_play_",
+    "id":"6",
+    "circles":[
+        {
+            "name" : "PC",
+            "id" : "61",
+            "icon" : "pc",
+            "color" : "6"
+        }, {
+                      "name" : "XBox",
+                      "id" : "62",
+                      "icon" : "xbox",
+                      "color" : "6"
+                  }, {
+                                         "name" : "Playstation",
+                                         "id" : "63",
+                                         "icon" : "playstation",
+                                         "color" : "6"
+                                     }, {
+                                                            "name" : "WII",
+                                                            "id" : "64",
+                                                            "icon" : "wii",
+                                                            "color" : "6"
+                                                        }, {
+                                                                               "name" : "Gameboy",
+                                                                               "id" : "65",
+                                                                               "icon" : "gameboy",
+                                                                               "color" : "6"
+                                                                           }, {
+                                                                                                  "name" : "Console",
+                                                                                                  "id" : "66",
+                                                                                                  "icon" : "console",
+                                                                                                  "color" : "6"
+                                                                                              }
+                                                                                              ]}

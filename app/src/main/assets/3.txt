@@ -1,0 +1,36 @@
+{
+    "tag" : "pick_vehicles_",
+    "id":"2",
+    "circles":[
+        {
+            "name" : "Car",
+            "id" : "31",
+            "icon" : "car",
+            "color" : "3"
+        },{
+                      "name" : "Motorcycle",
+                      "id" : "32",
+                      "icon" : "motorcycle",
+                      "color" : "3"
+                  },{
+                                "name" : "Vespa",
+                                "id" : "33",
+                                "icon" : "vespa",
+                                "color" : "3"
+                            },{
+                                          "name" : "Train",
+                                          "id" : "34",
+                                          "icon" : "train",
+                                          "color" : "3"
+                                      },{
+                                                    "name" : "Tram",
+                                                    "id" : "35",
+                                                    "icon" : "tram",
+                                                    "color" : "3"
+                                                },{
+                                                              "name" : "Plane",
+                                                              "id" : "36",
+                                                              "icon" : "plane",
+                                                              "color" : "3"
+                                                          },
+                                                          ]}

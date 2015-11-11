@@ -1,0 +1,42 @@
+{
+    "tag" : "pick_personal_",
+    "id":"1",
+    "circles":[
+        {
+            "name" : "Me",
+            "id" : "11",
+            "icon" : "person",
+            "color" : "1"
+        },{
+                      "name" : "Me & Other",
+                      "id" : "12",
+                      "icon" : "other",
+                      "color" : "1"
+                  },{
+                                         "name" : "Shopping",
+                                         "id" : "13",
+                                         "icon" : "shopping",
+                                         "color" : "1"
+                                     },{
+                                                            "name" : "Work",
+                                                            "id" : "14",
+                                                            "icon" : "work",
+                                                            "color" : "1"
+                                                        },{
+                                                                               "name" : "Hobby",
+                                                                               "id" : "15",
+                                                                               "icon" : "hobby",
+                                                                               "color" : "1"
+                                                                           },{
+                                                                                                  "name" : "Party",
+                                                                                                  "id" : "16",
+                                                                                                  "icon" : "party",
+                                                                                                  "color" : "1"
+                                                                                              },{
+                                                                                                                                                                                                 "name" : "Sexuality",
+                                                                                                                                                                                                 "id" : "17",
+                                                                                                                                                                                                 "icon" : "sex",
+                                                                                                                                                                                                 "color" : "1"
+                                                                                                                                                                                             }
+                                                                                              ]
+                                                                                              }

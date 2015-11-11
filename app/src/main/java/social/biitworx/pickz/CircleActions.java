@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by marcel.weissgerber on 09.11.2015.
  */
 public class CircleActions {
-    private static HashMap<String,Runnable> actions;
+    private static HashMap<String, Runnable> actions;
 
     static {
         actions = new HashMap<>();
@@ -35,28 +35,28 @@ public class CircleActions {
             @Override
             public void run() {
 
-                CircleView.collectionRight = new CircleCollection();
+                CircleView.collectionRight = CircleSubHelper.getCollection("1");
             }
         });
         actions.put("2", new Runnable() {
             @Override
             public void run() {
 
-                CircleView.collectionRight = new CircleCollection();
+                CircleView.collectionRight = CircleSubHelper.getCollection("2");
             }
         });
         actions.put("3", new Runnable() {
             @Override
             public void run() {
 
-                CircleView.collectionRight = new CircleCollection();
+                CircleView.collectionRight = CircleSubHelper.getCollection("3");
             }
         });
         actions.put("4", new Runnable() {
             @Override
             public void run() {
 
-                CircleView.collectionRight = new CircleCollection();
+                CircleView.collectionRight = CircleSubHelper.getCollection("4");
             }
         });
         actions.put("5", new Runnable() {
@@ -84,12 +84,13 @@ public class CircleActions {
             @Override
             public void run() {
 
-                CircleView.collectionRight = new CircleCollection();
+                CircleView.collectionRight = CircleSubHelper.getCollection("6");
             }
         });
+
     }
 
-    public static Runnable getAction(String id){
+    public static Runnable getAction(String id) {
         return actions.get(id);
     }
 }

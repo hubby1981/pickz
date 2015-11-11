@@ -1,0 +1,45 @@
+{
+    "tag" : "pick_sport_",
+    "id":"2",
+    "circles":[
+        {
+            "name" : "Fitness",
+            "id" : "21",
+            "icon" : "fitness",
+            "color" : "2"
+        },
+          {
+                    "name" : "Running",
+                    "id" : "22",
+                    "icon" : "running",
+                    "color" : "2"
+                },
+                  {
+                            "name" : "Walk",
+                            "id" : "23",
+                            "icon" : "walk",
+                            "color" : "2"
+                        },  {
+                                      "name" : "Swimming",
+                                      "id" : "24",
+                                      "icon" : "swimming",
+                                      "color" : "2"
+                                  },  {
+                                                "name" : "Climbing",
+                                                "id" : "25",
+                                                "icon" : "climbing",
+                                                "color" : "2"
+                                            },  {
+                                                          "name" : "Biking",
+                                                          "id" : "26",
+                                                          "icon" : "biking",
+                                                          "color" : "2"
+                                                      },
+                                                        {
+                                                                  "name" : "Fun",
+                                                                  "id" : "27",
+                                                                  "icon" : "fun",
+                                                                  "color" : "2"
+                                                              }
+    ]
+}

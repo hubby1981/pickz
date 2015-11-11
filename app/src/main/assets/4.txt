@@ -1,0 +1,22 @@
+{
+    "tag" : "pick_drinkfood_",
+    "id":"4",
+    "circles":[
+        {
+            "name" : "Drink",
+            "id" : "41",
+            "icon" : "drink",
+            "color" : "4"
+        }, {
+                      "name" : "Food",
+                      "id" : "42",
+                      "icon" : "food",
+                      "color" : "4"
+                  }, {
+                                "name" : "Sweets",
+                                "id" : "43",
+                                "icon" : "sweets",
+                                "color" : "4"
+                            }
+                            ]
+                            }
